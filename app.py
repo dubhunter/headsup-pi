@@ -13,21 +13,16 @@ GPIO.setup(PIN_LED, GPIO.OUT)
 GPIO.setup(PIN_SWITCH, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
-def show_dashboard():
+def switch():
     try:
-        requests.delete(ENDPOINT, timeout=TIMEOUT)
-        GPIO.output(PIN_LED, True)
+        if GPIO.input(PIN_SWITCH):
+            requests.delete(ENDPOINT, timeout=TIMEOUT)
+            GPIO.output(PIN_LED, True)
+        else:
+            requests.post(ENDPOINT, timeout=TIMEOUT)
+            GPIO.output(PIN_LED, False)
     except Exception:
         pass
 
 
-def hide_dashboard():
-    try:
-        requests.post(ENDPOINT, timeout=TIMEOUT)
-        GPIO.output(PIN_LED, False)
-    except Exception:
-        pass
-
-
-GPIO.add_event_detect(PIN_SWITCH, GPIO.RISING, callback=show_dashboard, bouncetime=200)
-GPIO.add_event_detect(PIN_SWITCH, GPIO.FALLING, callback=hide_dashboard, bouncetime=200)
+GPIO.add_event_detect(PIN_SWITCH, GPIO.BOTH, callback=switch, bouncetime=200)
