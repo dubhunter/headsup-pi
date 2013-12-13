@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from time import sleep
 import requests
 import RPi.GPIO as GPIO
 
@@ -26,3 +27,6 @@ def switch():
 
 
 GPIO.add_event_detect(PIN_SWITCH, GPIO.BOTH, callback=switch, bouncetime=200)
+
+while 1:
+    sleep(0.1)
