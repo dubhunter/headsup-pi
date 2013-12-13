@@ -25,8 +25,6 @@ def switch():
     except Exception:
         pass
 
-
-GPIO.add_event_detect(PIN_SWITCH, GPIO.BOTH, callback=switch, bouncetime=200)
-
 while 1:
-    sleep(0.1)
+    GPIO.wait_for_edge(PIN_SWITCH, GPIO.BOTH)
+    switch()
