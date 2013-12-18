@@ -27,6 +27,9 @@ def switch():
     except Exception:
         pass
 
+
+switch()
+
 while 1:
     print "Waiting..."
     GPIO.wait_for_edge(PIN_SWITCH, GPIO.BOTH)
